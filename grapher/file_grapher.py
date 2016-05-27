@@ -1,6 +1,7 @@
 from collections import namedtuple
 import os
 import re
+import sys
 
 import jedi
 
@@ -256,6 +257,7 @@ class FileGrapher(object):
             return os.path.relpath(module_path, self._abs_base_dir), True # internal
 
         if self._virtualEnv is not None and module_path.startswith(self._virtualEnv):
+            print(self._virtualEnv, module_path, normalize(os.path.relpath(module_path, self._virtualEnv)).split('/site-packages/', 1)[1], file=sys.stderr)
             return normalize(os.path.relpath(module_path, self._virtualEnv)).split('/site-packages/', 1)[1], False # external stdlib (virtualenv)
 
         return None, False
