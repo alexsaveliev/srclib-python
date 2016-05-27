@@ -8,6 +8,7 @@ before_install:
   - export TRAVIS_BUILD_DIR=$HOME/src/sourcegraph.com/sourcegraph/srclib-python
   - mkdir -p $HOME/bin
   - export PATH=$PATH:$HOME/bin
+  - export SRCLIB_PYTHON_VIRTUAL_ENV=$VIRTUAL_ENV
   - mkdir -p $HOME/.srclib/sourcegraph.com/sourcegraph/
 
 install:

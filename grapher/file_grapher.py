@@ -40,6 +40,7 @@ class FileGrapher(object):
         self._modulePathPrefixToDep = modulePathPrefixToDep
         self._syspath = list(reversed(sorted(syspath)))
         self._log = log
+        self._virtualEnv = os.environ.get('SRCLIB_PYTHON_VIRTUAL_ENV')
         self._source = None
         self._defs = {}
         self._refs = {}
@@ -253,6 +254,9 @@ class FileGrapher(object):
 
         if module_path.startswith(self._abs_base_dir):
             return os.path.relpath(module_path, self._abs_base_dir), True # internal
+
+        if self._virtualEnv is not None and module_path.startswith(self._virtualEnv):
+            return normalize(os.path.relpath(module_path, self._virtualEnv)).split('/site-packages/', 1)[1], False # external stdlib (virtualenv)
 
         return None, False
 
